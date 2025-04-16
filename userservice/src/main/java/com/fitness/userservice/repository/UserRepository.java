@@ -8,4 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User , String> {
     boolean existsByEmail(@NotBlank(message = "email is required") String email);
+
+    Boolean existsByKeycloakId(String userId);
+
+    User findByEmail(@NotBlank(message = "email is required") String email);
 }

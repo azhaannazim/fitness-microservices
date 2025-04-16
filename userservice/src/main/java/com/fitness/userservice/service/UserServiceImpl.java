@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
         UserResponse userResponse = new UserResponse();
         userResponse.setId(user.getId());
         userResponse.setEmail(user.getEmail());
-        userResponse.setPassword(user.getPassword());
+//        userResponse.setPassword(user.getPassword());
         userResponse.setFirstName(user.getFirstName());
         userResponse.setLastName(user.getLastName());
         userResponse.setCreatedAt(user.getCreatedAt());
@@ -32,29 +32,37 @@ public class UserServiceImpl implements UserService {
     public UserResponse register(RegisterRequest request) {
 
         if(userRepository.existsByEmail(request.getEmail())){
-            throw new RuntimeException("email already exist");
+            User existingUser = userRepository.findByEmail(request.getEmail());
+
+            return getUserResponse(existingUser);
         }
         User user = new User();
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
+        user.setKeycloakId(request.getKeycloakId());
+//        user.setPassword(request.getPassword());
 
         User savedUser = userRepository.save(user);
-        UserResponse userResponse = new UserResponse();
-        userResponse.setId(savedUser.getId());
-        userResponse.setEmail(savedUser.getEmail());
-        userResponse.setPassword(savedUser.getPassword());
-        userResponse.setFirstName(savedUser.getFirstName());
-        userResponse.setLastName(savedUser.getLastName());
-        userResponse.setCreatedAt(savedUser.getCreatedAt());
-        userResponse.setUpdatedAt(savedUser.getUpdatedAt());
 
+        return getUserResponse(savedUser);
+    }
+
+    private static UserResponse getUserResponse(User existingUser) {
+        UserResponse userResponse = new UserResponse();
+        userResponse.setId(existingUser.getId());
+        userResponse.setKeycloakId(existingUser.getKeycloakId());
+        userResponse.setEmail(existingUser.getEmail());
+//        userResponse.setPassword(existingUser.getPassword());
+        userResponse.setFirstName(existingUser.getFirstName());
+        userResponse.setLastName(existingUser.getLastName());
+        userResponse.setCreatedAt(existingUser.getCreatedAt());
+        userResponse.setUpdatedAt(existingUser.getUpdatedAt());
         return userResponse;
     }
 
     @Override
-    public Boolean existByUserId(String userId) {
-        return userRepository.existsById(userId);
+    public Boolean existsByKeycloakId(String userId) {
+        return userRepository.existsByKeycloakId(userId);
     }
 }

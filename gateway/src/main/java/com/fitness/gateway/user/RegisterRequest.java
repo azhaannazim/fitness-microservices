@@ -1,6 +1,5 @@
-package com.fitness.userservice.dto;
+package com.fitness.gateway.user;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -11,4 +10,5 @@ public class RegisterRequest {
     private String keycloakId;
     private String firstName;
     private String lastName;
+    private String password;
 }

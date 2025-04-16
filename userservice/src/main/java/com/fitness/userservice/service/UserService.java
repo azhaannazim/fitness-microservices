@@ -9,5 +9,5 @@ public interface UserService {
 
     UserResponse register(@Valid RegisterRequest request);
 
-    Boolean existByUserId(String userId);
+    Boolean existsByKeycloakId(String userId);
 }
