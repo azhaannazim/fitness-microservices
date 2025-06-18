@@ -20,7 +20,7 @@ public class ActivityServiceImpl implements ActivityService{
 
     private final ActivityRepository activityRepository;
     private final UserValidationService userValidationService;
-    private final RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate rabbitTemplate; //synchronous rabbit mq comm
 
     @Value("${rabbitmq.exchange.name}")
     private String exchange;
@@ -30,6 +30,10 @@ public class ActivityServiceImpl implements ActivityService{
 
     @Override
     public ActivityResponse trackActivity(ActivityRequest request) {
+//        if(!userValidationService.validateUser(request.getUserId())){
+//            throw new RuntimeException("user not found with id : " + request.getUserId());
+//        }
+
         Activity activity = Activity.builder()
                 .userId(request.getUserId())
                 .type(request.getType())

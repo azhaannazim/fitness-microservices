@@ -33,6 +33,7 @@ public class UserService {
 
     public Mono<UserResponse> registerUser(RegisterRequest request) {
         log.info("registering user.... : {}" , request.getEmail());
+
         return userServiceWebClient.post()
                 .uri("/api/users/register")
                 .bodyValue(request)

@@ -4,10 +4,12 @@ import com.fitness.userservice.dto.RegisterRequest;
 import com.fitness.userservice.dto.UserResponse;
 import com.fitness.userservice.model.User;
 import com.fitness.userservice.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
@@ -16,6 +18,7 @@ public class UserServiceImpl implements UserService {
     public UserResponse getUserProfile(String userId) {
         User user  = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User Not Found"));
+
         UserResponse userResponse = new UserResponse();
         userResponse.setId(user.getId());
         userResponse.setEmail(user.getEmail());
@@ -63,6 +66,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean existsByKeycloakId(String userId) {
+        log.info("calling User Validation API for userId : {}", userId );
         return userRepository.existsByKeycloakId(userId);
     }
 }

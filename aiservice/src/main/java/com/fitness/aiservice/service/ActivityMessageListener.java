@@ -18,8 +18,8 @@ public class ActivityMessageListener {
     @RabbitListener(queues = "activity.queue")
     public void processActivity(Activity activity){
         log.info("Received : {}", activity.getId());
-//        log.info("Received : {}", activityAIService.generateResponse(activity));
-        Recommendation recommendation = activityAIService.generateResponse(activity);
+//        log.info("generated recommendation : {}", activityAIService.generateRecommendation(activity));
+        Recommendation recommendation = activityAIService.generateRecommendation(activity);
         recommendationRepository.save(recommendation);
     }
 }

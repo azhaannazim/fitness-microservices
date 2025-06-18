@@ -30,10 +30,12 @@ public class RabbitMQConfig {
     public DirectExchange activityExchange(){
         return new DirectExchange(exchange);
     }
+
     @Bean
     public Binding activityBinding(Queue activityQueue ,DirectExchange activityExchange){
         return BindingBuilder.bind(activityQueue).to(activityExchange).with(routingKey);
     }
+
     @Bean
     public MessageConverter jsonMessageConverter(){
         return new Jackson2JsonMessageConverter(); //java object to json

@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class keycloakUserSyncFilter implements WebFilter {
+public class keycloakUserSyncFilter implements WebFilter { //a webflux filter that's going to intercept every request
     private final UserService userService;
 
     @Override
@@ -58,7 +58,7 @@ public class keycloakUserSyncFilter implements WebFilter {
 
     private RegisterRequest getUserDetails(String token) {
         try {
-            String tokenWithoutBearer = token.replace("Bearer" , "").trim();
+            String tokenWithoutBearer = token.replace("Bearer " , "").trim();
             SignedJWT signedJWT = SignedJWT.parse(tokenWithoutBearer);
             JWTClaimsSet claimsSet = signedJWT.getJWTClaimsSet();
 

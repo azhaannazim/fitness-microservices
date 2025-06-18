@@ -7,8 +7,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class WebClientConfig {
-    @Bean
-    @LoadBalanced
+    @Bean //This method produces a bean that should be managed by Spring’s IoC container.
+    @LoadBalanced //allows webclient to resolve the service name via eureka
     public WebClient.Builder webClientBuilder(){
         return WebClient.builder();
     }
